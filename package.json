@@ -1,0 +1,21 @@
+{
+  "name": "modularity-handbook",
+  "version": "0.1.0",
+  "description": "Hitchhiker's Guide to Modularity",
+  "main": "index.js",
+  "@std/esm": "cjs",
+  "author": "Pier Paolo Ramon <pierpaolo.ramon@smc.it>",
+  "license": "MIT",
+  "scripts": {
+    "generate-pages": "node -r @std/esm scripts/generate-pages"
+  },
+  "devDependencies": {
+    "@std/esm": "^0.17.1",
+    "commonmark": "^0.28.1",
+    "glob": "^7.1.2",
+    "gray-matter": "^3.1.1",
+    "lodash": "^4.17.4",
+    "mkdirp": "^0.5.1",
+    "pug": "^2.0.0-rc.4"
+  }
+}

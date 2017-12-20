@@ -1,0 +1,40 @@
+extends layout.pug
+
+block title
+    | Modularity Handbook
+
+block content
+    .site-container
+        header
+            h1 Modularity Handbook
+    .container
+        table.table.table-autofit.table-hover.table-list.table-responsive-sm
+            thead: tr
+                th Concept
+                each key in availablePlatforms
+                    th: .label.label-info= get(key).data.title
+            tbody
+                each key in availableImplemented
+                    - const implementors = implementedById[key] || []
+                    tr
+                        th= get(key).data.title
+                        each plat in availablePlatforms
+                            - const matches = implementors.filter(o => o.data.platforms.includes(plat));
+                            if matches.length
+                                td
+                                    each match in matches
+                                        a.table-cell-link(href=getURL(match.id))= match.data.title
+                            else
+                                td.text-muted No implementation
+
+    //.container: .row
+        each object in objects
+            .col-sm-6.col-md-4
+                a.card.card-link(href=getURL(object.id))
+                    .card-body: .card-row
+                        .flex-col.flex-col-expand
+                            .card-title= object.data.title
+                            if object.data.platforms.length
+                                .card-detail
+                                    +labels(object.data.platforms)
+                        .flex-col →

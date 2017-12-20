@@ -1,0 +1,63 @@
+extends layout.pug
+
+block title
+    | #{title} - Modularity Handbook
+
+mixin item(obj)
+    a.list-group-item.list-group-item-flex(href=getURL(obj.id))
+        .flex-col.flex-col-expand
+            = obj.data.title
+            .list-group-detail
+                +labels(obj.data.platforms)
+        .flex-col →
+
+mixin title(value, ctxFree)
+    = value
+    if ctxFree && !value.toLowerCase().includes(ctxFree.toLowerCase())
+        = ' '
+        small= ctxFree
+
+block content
+    - const contextFreeTitle = data['context-free-title'];
+    - const referenceURL = data['reference-url'];
+    main.site-container
+        header
+            h1: +title(title, contextFreeTitle)
+            if referenceURL
+                p.lead: a(href=referenceURL)= referenceURL
+            if platforms.length
+                +labels(platforms)
+
+        if implements.length
+            section
+                h2 Implements…
+                ul.list-group
+                    each ref in getAll(implements)
+                        +item(ref)
+
+        if defines.length
+            section
+                h2 Defines…
+                ul.list-group
+                    each ref in getAll(defines)
+                        +item(ref)
+
+        if definedBy.length
+            section
+                h2 Defined by…
+                ul.list-group
+                    each ref in definedBy
+                        +item(ref)
+
+        if html
+            section
+                h2 Description
+                .content
+                    != html
+
+        if implementedBy.length
+            section
+                h2 Implemented by…
+                ul.list-group
+                    each ref in implementedBy
+                        +item(ref)
